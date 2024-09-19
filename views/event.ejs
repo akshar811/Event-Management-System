@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event page</title>
+    <link rel="stylesheet" href="../signup.css">
+    <style>
+        .field #location{
+            margin-top: 15px !important;
+        }
+        .content{
+            height: 570px;
+        }
+        .field #maxAttendees{
+            margin-top: 34px !important;
+        }
+        .field #image{
+            margin-top: 49px !important;
+            padding-top: 15px;
+        }
+        .event{
+            margin-top: 78px;
+        }
+    </style>
+</head>
+<body>
+
+    <%-include("navbar") %>
+
+    <div class="content">
+
+        <form action="/Event/createEvent" method="POST" enctype="multipart/form-data">
+
+            <div class="field">
+                <input type="text" id="title" name="title" placeholder="Title" required><br>
+            </div>
+            <div class="field">
+                <input id="description" name="description" placeholder="Description" required></input><br>
+            </div>
+            <div class="field">
+                <input type="date" id="date" name="date" placeholder="Date" required><br>
+            </div>
+            <div class="field">
+                <input type="text" id="location" placeholder="Location" name="location"  required><br>
+            </div>
+            <div class="field">
+                <input type="number" id="maxAttendees" placeholder="Max Attendees" name="maxAttendees" required><br>
+            </div>
+       
+           <div class="field">
+            <input type="file" id="image" placeholder="Image" name="image"><br>
+           </div> 
+    
+            <button type="submit" class="event"> Event</button>
+        </form>
+    
+    </div>
+  
+   
+</body>
+</html>

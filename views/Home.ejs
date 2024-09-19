@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home page</title>
+    <link rel="stylesheet" href="../style.css" />
+    <style>
+      .filter {
+        margin-top: 50px;
+        margin-left: 800px;
+        border: 1px solid #ccc;
+        padding: 18px;
+      }
+      .filter #date {
+        padding: 8px 14px;
+        font-size: 16px;
+      }
+      .filter #location {
+        padding: 8px 14px;
+        font-size: 16px;
+      }
+      .filter-btn {
+        padding: 7px 13px;
+        margin-left: 10px;
+        font-size: 15px;
+      }
+      .AllData {
+        display: flex;
+        display: inline-block;
+        margin-left: 150px;
+        margin-top: 120px;
+      }
+      .AllData img {
+        width: 53%;
+        border-radius: 20px;
+      }
+      .datas h2{
+        font-size: 22px;
+        margin-left: 8px;
+        margin-top: 10px;
+      }
+      .datas p{
+        font-size: 17px;
+        margin-left: 8px;
+        margin-top: 10px;
+      }
+      .rsvp{
+        padding: 5px 24px;
+        font-size: 15px;
+        margin-top: 13px;
+        margin-left: 5px;
+      }
+      .btn-2{
+        display: flex;
+        margin-top: 15px;
+        margin-left: 5px;
+      }
+      .edit{
+        padding: 5px 24px;
+        font-size: 15px;
+      }
+      .Delete{
+        padding: 5px 24px;
+        font-size: 15px;
+        margin-left: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <%-include("navbar") %>
+
+    <form method="GET" action="/Event/AllData" class="filter">
+      <label for="date" id="date">Date:</label>
+      <input type="date" id="date" name="date" />
+
+      <label for="location" id="location">Location:</label>
+      <input
+        type="text"
+        id="location"
+        name="location"
+        placeholder="Enter location"
+      />
+
+      <button type="submit" class="filter-btn">Filter</button>
+    </form>
+
+    <% data.forEach(event => { %>
+
+    <div class="AllData">
+      <div class="datas">
+        <img src="/uploads/<%= event.image %>" alt="Event Image" />
+        <h2>Title: <%= event.title %></h2>
+        <p>Description: <%= event.description %></p>
+        <p>Date: <%= event.date.toDateString() %></p>
+
+        <p>
+          Attendees: <%= event.attendees.length %> / <%= event.maxAttendees %>
+        </p>
+
+        <!-- Only show RSVP button if the event is not full -->
+        <% if (event.attendees.length < event.maxAttendees) { %>
+        <form action="/Event/RSPV/<%= event._id %>" method="post">
+          <button type="submit" class="rsvp">RSVP</button>
+        </form>
+        <% } else { %>
+        <p>Event is full!</p>
+        <% } %>
+
+        <div class="btn-2">
+          <button class="edit"><a href="/Event/<%= event._id %>/edit">Edit</a></button>
+
+          <form action="/Event/<%= event._id %>?_method=DELETE" method="post">
+            <button class="Delete">Delete</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <% }) %>
+  </body>
+</html>
